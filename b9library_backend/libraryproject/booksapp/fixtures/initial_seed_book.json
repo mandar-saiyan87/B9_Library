@@ -1,0 +1,52 @@
+[
+    {
+        "model": "booksapp.book",
+        "fields": {
+            "title": "The Best from Manhunt (1958)",
+            "author": "Scott & Sidney Meredith",
+            "description": "On the sidewalk bleeding / Evan HunterMugger murder / Richard DemingDecision / Helen NielsenThe collector comes after payday / Fletcher FloraTry it my way / Jack RitchieMovie night / Robert TurnerIn memory of Judith Courtright / Erskine CaldwellDay's work / Jonathan LordThe scrapbook / Jonathan CraigQuiet day in the county jail / Craig RiceThe set-up / Stanley L. ColbertThe double take / Richard S. PratherThe man who found the money / James E. Cronin",
+            "publish_year": 1958,
+            "cover_image": "https://s3proxy.cdn-zlib.sk//covers299/collections/userbooks/fa35c9eaa26d845111754dfac8bf81c2b1732a09b9ae03b177b20fa7126195f0.jpg"
+        }
+    },
+    {
+        "model": "booksapp.book",
+        "fields": {
+            "title": "The Life and Afterlife of Harry Houdini",
+            "author": "Simon and Schuster",
+            "description": "Joe Posnanski enters the colorful world of Harry Houdini and his legions of devoted fans to explore the illusionist's impact on global culture—and why his legacy endures to this day.",
+            "publish_year": 2019,
+            "cover_image": "https://s3proxy.cdn-zlib.sk//covers299/collections/userbooks/9f3b1f2f741297a01c01dbb64dfd42151e91932189873410121f42c46f9a853f.jpg"
+        }
+    },
+    {
+        "model": "booksapp.book",
+        "fields": {
+            "title": "The Book of Lost Hours: A Novel",
+            "author": "Hayley Gelfuso",
+            "description": "For fans of The Ministry of Time and The Midnight Library, a sweeping, unforgettable novel following two remarkable women moving between postwar and Cold War-era America and the mysterious time space, a library filled with books containing the memories of those who bore witness to history.",
+            "publish_year": 2025,
+            "cover_image": "https://s3proxy.cdn-zlib.sk//covers299/collections/userbooks/bbe7691e8fd06c26ff6b07e2d38d53cf2db08f23c85f5cd2e85b648dbecd78a7.jpg"
+        }
+    },
+    {
+        "model": "booksapp.book",
+        "fields": {
+            "title": "Detective Kim Stone 22: Little Children",
+            "author": "Angela Marsons",
+            "description": "Two little children are missing from the same seaside town, and only Kim Stone can find out why...With the investigation into the boys’ disappearance going nowhere, Detective Kim Stone and her team have been sent halfway across the country to help.",
+            "publish_year": 2024,
+            "cover_image": "https://s3proxy.cdn-zlib.sk//covers299/collections/userbooks/b767199cd6cbaaceedcc3affa3b0339529c424ce87d192b6c02dd85f497ffbf1.jpg"
+        }
+    },
+    {
+        "model": "booksapp.book",
+        "fields": {
+            "title": "Time Trap 2: Showdown",
+            "author": "Ace Books : Berkley Pub. Group, First Edition",
+            "description": "Second in the exciting time-travel series in which a 26th-century scientist becomes a castaway in the past. Noel Kendran goes back to 1887 New Mexico where his murderous alter-ego picks up his trail.",
+            "publish_year": 1992,
+            "cover_image": "https://s3proxy.cdn-zlib.sk//covers299/collections/userbooks/0bd71bbc7341c22a1bdf4c009b464b8c1b520e514e3c08e797d84d33501ebebb.jpg"
+        }
+    }
+]
