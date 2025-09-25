@@ -1,5 +1,5 @@
 import strawberry
-from typing import List, Union
+from typing import List, Optional, Union
 import strawberry_django
 from strawberry_django.optimizer import DjangoOptimizerExtension
 from .models import Book
@@ -14,6 +14,15 @@ class BookType:
     pass
 
 
+@strawberry.input
+class UpdateBookInput:
+    title: Optional[str] = None
+    author: Optional[str] = None
+    description: Optional[str] = None
+    publish_year: Optional[int] = None
+    cover_image: Optional[str] = None
+
+
 @strawberry.type
 class BookNotFoundError:
     message: str
@@ -22,17 +31,8 @@ class BookNotFoundError:
 @strawberry.type
 class AddBookError:
     message: str
+    # To catch list of validation error in case (e.g. title is too long, author is required etc. Right now not much of validation is done)
     field_errors: list[str] = strawberry.field(default_factory=list)
-
-
-@strawberry.type
-class BookUpdateSuccess:
-    book: BookType
-
-
-@strawberry.type
-class BookDeleteSuccess:
-    id: int
 
 
 @strawberry.type
@@ -69,7 +69,7 @@ class Query:
 @strawberry.type
 class Mutation:
     @strawberry_django.mutation(handle_django_errors=True)
-    async def add_new_book(self, title: str, author: str, description: str, publish_year: int, cover_image: str = None) -> BookType:
+    async def add_new_book(self, title: str, author: str, description: str, publish_year: int, cover_image: str = None) -> Union[BookType, AddBookError]:
         try:
             book = Book(
                 title=title,
@@ -80,49 +80,51 @@ class Mutation:
             )
             await sync_to_async(book.full_clean)()
             await sync_to_async(book.save)()
-            
+
             return book
-        
+
         except Exception as e:
             return AddBookError(message=str(e))
 
     @strawberry_django.mutation(handle_django_errors=True)
-    async def update_book(self, id: int, title: str, author: str, description: str, publish_year: int, cover_image: str = None) -> BookType:
+    async def update_book(self, id: int, updateData: UpdateBookInput) -> Union[BookType, BookNotFoundError, AddBookError]:
         try:
-            book = Book.objects.get(id=id)
-            if title:
-                book.title = title
+            book = await sync_to_async(Book.objects.get)(id=id)
 
-            if author:
-                book.author = author
+            if updateData.title is not None:
+                book.title = updateData.title
 
-            if description:
-                book.description = description
+            if updateData.author is not None:
+                book.author = updateData.author
 
-            if publish_year:
-                book.publish_year = publish_year
+            if updateData.description is not None:
+                book.description = updateData.description
 
-            if cover_image:
-                book.cover_image = cover_image
+            if updateData.publish_year:
+                book.publish_year = updateData.publish_year
+
+            if updateData.cover_image:
+                book.cover_image = updateData.cover_image
 
             await sync_to_async(book.full_clean)()
             await sync_to_async(book.save)()
-            
-            return BookUpdateSuccess(book=book)
-        
+
+            return book
+
         except ObjectDoesNotExist:
             return BookNotFoundError(message=f"Book with id {id} not found.")
         except Exception as e:
+            # Reusing AddBookError as it shares same validations
             return AddBookError(message=str(e))
 
     @strawberry_django.mutation(handle_django_errors=True)
-    async def delete_book(self, id: int) -> BookType:
+    async def delete_book(self, id: int) -> Union[BookType, BookNotFoundError]:
         try:
             book = await sync_to_async(Book.objects.get)(id=id)
             await sync_to_async(book.delete)()
-            
+
             return book
-        
+
         except Book.DoesNotExist:
             return BookNotFoundError(message=f"Book with id {id} not found.")
 
